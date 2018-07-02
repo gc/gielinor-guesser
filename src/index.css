@@ -1,0 +1,73 @@
+body {
+    padding: 0;
+    margin: 0;
+}
+html, body, #mapContainer, #root {
+    height: 100%;
+    width: 100%;
+}
+
+.leaflet-container {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  cursor: pointer!important;
+  background-color: #000000!important;
+}
+
+.rsBorder {
+  border-style: solid;
+  border-radius: 10px;
+  border-image-slice: 27 27 27 27;
+  border-image-width: 27px 27px 27px 27px;
+  border-image-outset: 0px 0px 0px 0px;
+  border-image-repeat: stretch stretch;
+  border-image-source: url("./assets/border-box.png");
+}
+
+#menu {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  bottom: 0;
+  position: absolute;
+  margin-bottom: 10px;
+  width: 100%;
+  z-index: 999999;
+}
+
+#floatingPanel {
+  width: 200px;
+  height: 113px;
+  background-size: 200px 113px;
+  transition: 0.5s;
+  cursor: pointer!important;
+}
+
+#floatingPanel:hover {
+  transition: 0.5s ease;
+  width: 600px;
+  height: 338px;
+  background-size: 600px 338px;
+}
+
+.leaflet-popup-content-wrapper {
+  margin: 15px;
+  padding: 15px!important;
+  color: yellow!important;
+  background: url("./assets/bg.png")!important;
+}
+
+.leaflet-popup-tip-container {
+  display: none;
+}
+
+.leaflet-pane.leaflet-popup-pane > div > a {
+  margin: 20px;
+  background: url("./assets/closebutton.png") no-repeat center;
+  font-size: 0;
+}
+
+.leaflet-pane.leaflet-popup-pane > div > a:hover {
+  background: url("./assets/closebutton.hover.png") no-repeat center;
+}
