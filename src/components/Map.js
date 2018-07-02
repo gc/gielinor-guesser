@@ -28,7 +28,7 @@ class Map extends Component {
       this.map.setMinZoom(4);
       this.map.setMaxZoom(this.rc.zoomLevel() + 1);
       this.map.setView(this.rc.unproject([4948,2491]), 5);
-      this.surfaceLayer = L.tileLayer("/tiles/{z}/{x}/{y}.png", {
+      this.surfaceLayer = L.tileLayer("/gielinor-guesser/tiles/{z}/{x}/{y}.png", {
         edgeBufferTiles: 2,
         noWrap: true
       }).addTo(this.map);
