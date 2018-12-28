@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import FloatingPanel from "./FloatingPanel";
 import L from "leaflet";
 import { RasterCoords } from "leaflet-rastercoords";
-
+function sleep(ms) {
+	return new Promise(resolve => setTimeout(resolve, ms));
+}
 const rotatingArrow = L.icon({
 	iconUrl: "https://i.imgur.com/D0pBBzL.gif",
 	iconSize: [35, 37],
@@ -28,7 +30,7 @@ class Map extends Component {
 		this.map.setMinZoom(4);
 		this.map.setMaxZoom(this.rc.zoomLevel() + 1);
 		this.map.setView(this.rc.unproject([4948, 2491]), 5);
-		this.surfaceLayer = L.tileLayer("/gielinor-guesser/tiles/{z}/{x}/{y}.png", {
+		this.surfaceLayer = L.tileLayer(`/tiles/{z}/{x}/{y}.png`, {
 			edgeBufferTiles: 2,
 			noWrap: true
 		}).addTo(this.map);
@@ -57,17 +59,20 @@ class Map extends Component {
 		// Add Spinning Arrow to Map
 		// If theres no marker at all, add one
 		if (!this.isMarker) this.marker.addTo(this.map);
+
 		// Set the marker location to where they clicked
 		this.marker.setLatLng(this.markedLocation);
 
 		// Bring up the Popup for Submitting the guess
 		this.openGuessPopup(event.latlng);
 
-		this.setState({ guessLocation: event.latlng }, () => {
-			// What happens when they make their guess
-			document.getElementById("submitbutton").onclick = () =>
-				this.onSubmitOfGuess(this.state.guessLocation);
-		});
+		this.setState({ guessLocation: event.latlng });
+		console.log(document.getElementById("submitbutton"));
+		const func = () => {
+			console.log("TEST TEST FUNC");
+			this.onSubmitOfGuess(event.latlng);
+		};
+		document.getElementById("submitbutton").addEventListener("click", func);
 	};
 
 	// Calculate the score based off distance between their guess and the answer
@@ -101,13 +106,14 @@ class Map extends Component {
 			.setLatLng(location)
 			.setContent(
 				`<h3 style="color: yellow; text-align: center">Click here to submit your guess!</h3>
-    <button id="submitbutton" style="margin: 0 auto; display: block" onclick="this.">Submit</button>`
+			<button type="button" id="submitbutton" style="margin: 0 auto; display: block">Submit</button>`
 			)
 			.openOn(this.map);
 	};
 
 	// What happens when they submit their guess
 	onSubmitOfGuess = location => {
+		console.log("onSubmitOfGuess");
 		this.submitted = true;
 		this.showLine();
 		const score = this.calculateScore(this.poly.getLatLngs());
